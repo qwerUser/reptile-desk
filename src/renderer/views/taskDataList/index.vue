@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2025-04-28 08:16:08
- * @LastEditTime: 2025-04-30 11:18:33
+ * @LastEditTime: 2025-05-08 08:50:36
 -->
 <template>
   <div class="task-list">
@@ -26,8 +26,15 @@
           :title="item"
           :key="index"
           :name="`${index+1}`"
+          style="border-bottom: 1px solid #e1e1e1;"
         >
-          <pre>{{JSON.stringify(JSON.parse(previewData.jsonData[item]), null, 2)}}</pre>
+          <template #title>
+            <div style="background-color: rgb(239.8, 248.9, 235.3);flex: 1;text-align: left;padding: 0 20px;">{{ item }}</div>
+          </template>
+          <template #icon>
+            <div style="background-color: rgb(239.8, 248.9, 235.3);width: 48px;cursor: pointer;color: #409EFF;">{{ activeNames.includes(`${index+1}`) ? '收起' : '展开' }}</div>
+          </template>
+          <pre>{{JSON.stringify(previewData.jsonData[item], null, 2)}}</pre>
         </el-collapse-item>
       </el-collapse>
     </el-dialog>
@@ -114,5 +121,7 @@ onMounted(() => {
 }
 pre {
   margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 </style>

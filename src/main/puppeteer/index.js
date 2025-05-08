@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2025-04-29 08:29:07
- * @LastEditTime: 2025-05-07 17:20:04
+ * @LastEditTime: 2025-05-08 08:29:26
  */
 // const puppeteerCore = require('puppeteer');
 const puppeteer = require('puppeteer-extra');
@@ -209,7 +209,7 @@ module.exports = {
             console.log('============================');
             console.log(api);
             console.log('============================');
-            const res = await response.text();
+            const res = await response.json();
             if(!apiResult[api]) {
               apiResult[api] = [];
             }

@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2025-04-28 09:49:42
- * @LastEditTime: 2025-05-07 17:15:20
+ * @LastEditTime: 2025-05-08 08:36:20
  */
 const { ipcMain } = require('electron');
 const database = require('../../database');
@@ -71,10 +71,16 @@ function initTaskListHandlers() {
       // 如果已经存在就更新
       if(reptileDataList && reptileDataList.length > 0) {
         json = reptileDataList[0].json ? JSON.parse(reptileDataList[0].json) : '';
+        console.log('json:', json);
+        console.log('res.apiResult:', res.apiResult);
         if(json || res.apiResult) {
-          const keys = [...new Set(Object.keys(json||{})), ...new Set(Object.keys(res.apiResult || {}))]
+          const keys = [...new Set([...Object.keys(json||{}),...Object.keys(res.apiResult || {})])];
+          console.log('keys:::::', keys);
+          if(!json) {
+            json = {};
+          }
           for(let i = 0; i < keys.length; i++) {
-            json[keys[i]] = [...(json[keys[i]] || []), ...(res.apiResult[keys[i]] || [])];
+            json[keys[i]] = (json[keys[i]] || []).concat(res.apiResult[keys[i]] || []);
           }
         }
         await db.update('reptileData', { json: json ? JSON.stringify(json) : '' }, `taskCode = '${result[0].code}'`);
